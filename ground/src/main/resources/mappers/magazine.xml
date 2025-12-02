@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="magazine">
+
+    <select id="search_count" resultType="int">
+        select count(*) from magazine
+        <choose>
+            <when test="search_option != 'all'">
+                where ${search_option} like '%'||#{keyword}||'%'
+            </when>
+            <otherwise>
+                where subject like '%'||#{keyword}||'%'
+                or contents like '%'||#{keyword}||'%'
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="search_list" resultType="com.example.ground.dto.MagazineDTO">
+        select * from (select rownum as rn, A.* from (
+            select num, subject, contents, type, reg_date, see, filename, filesize 
+            from magazine b
+            <choose>
+                <when test="search_option != 'all'">
+                    where ${search_option} like '%'||#{keyword}||'%'
+                </when>
+                <otherwise>
+                    where subject like '%'||#{keyword}||'%'
+                    or contents like '%'||#{keyword}||'%'
+                </otherwise>
+            </choose>
+        ) A) where rn between #{start} and #{end}
+    </select>
+
+    <select id="filename" resultType="String"> 
+        select filename from magazine
+        where num=#{num}
+    </select>
+
+    <select id="list" resultType="com.example.ground.dto.MagazineDTO">
+        select * from (
+            select rownum as rn, A.* from (
+                select num, subject, type, contents, reg_date, see, filename, filesize 
+                from magazine b order by num desc
+            ) A
+        ) where rn between #{start} and #{end}
+    </select>
+
+    <select id="noti" resultType="com.example.ground.dto.MagazineDTO">
+        select * from (
+            select rownum as rn, A.* from (
+                select num, subject, contents, reg_date, see, filename, filesize
+                from magazine b where type = #{type} order by num
+            ) A
+        ) where rn between #{start} and #{end}
+    </select>
+
+    <insert id="insert">
+        insert into magazine
+        (num, type, subject, contents, filename, filesize)
+        values
+        (num_seq.nextval, #{type}, #{subject}, #{contents}, #{filename}, #{filesize})
+    </insert>
+
+    <select id="post" resultType="com.example.ground.dto.MagazineDTO">
+        select * from magazine where num=#{num}
+    </select>
+
+    <update id="update">
+        update magazine set type=#{type},
+        subject=#{subject}, contents=#{contents}, filename=#{filename},
+        filesize=#{filesize}
+        where num=#{num}
+    </update>
+
+    <select id="count" resultType="int">
+        select count(*) from magazine
+    </select>
+
+    <update id="see">
+        update magazine set see = see + 1 where num = #{num}
+    </update>
+
+    <delete id="delete">
+        delete from magazine where num=#{num}
+    </delete>
+
+</mapper>

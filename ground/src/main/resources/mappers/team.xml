@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team">
+ <insert id="insert">
+insert into team(code,name,logo,days,time,gender,age,skil) VALUES (#{code}, #{name},#{logo},#{days},#{time},#{gender},#{age},#{skil})
+</insert>
+<select id="selecteam" resultType="com.example.ground.dto.TeamDTO">
+    SELECT logo, name,code FROM team WHERE code IN
+    <foreach item="item" collection="list" open="(" separator="," close=")">
+        #{item}
+    </foreach>
+</select>
+<select id="oneteam" resultType="com.example.ground.dto.TeamDTO">
+select * from team where code =#{code}
+</select> 
+</mapper>

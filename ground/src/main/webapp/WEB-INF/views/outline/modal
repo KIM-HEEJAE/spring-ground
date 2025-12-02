@@ -1,0 +1,71 @@
+	<style>
+	.modal {
+		display: none; /* 초기에는 보이지 않도록 설정 */
+		position: fixed; /* 화면에 고정 */
+		z-index: 1; /* 다른 요소들보다 위에 표시 */
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5); /* 반투명한 배경 */
+	}
+	
+	/* 모달 내용 스타일 */
+	.modal-content {
+		background-color: #fefefe;
+		margin: 15% auto; /* 모달을 화면 중앙에 위치 */
+		padding: 20px;
+		border: 1px solid #888;
+		width: 80%; /* 모달 너비 */
+	}
+	
+	/* 모달 닫기 버튼 스타일 */
+	.close {
+		color: #aaaaaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+	}
+	</style>
+
+<script>
+function openPopup1() {
+    // Define the popup dimensions
+    var width = 550;
+    var height = 450;
+
+    // Calculate the center position
+    var left = (screen.width - width) / 2;
+    var top = (screen.height - height) / 2;
+
+    // Open the popup window in the center of the screen
+    window.open("/maketeam.do", 'edit', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
+}
+</script>
+
+	<script>
+		var modalBtn = document.getElementById("modalButton");
+
+		//모달
+		var modal = document.getElementById("myModal");
+
+		//모달 열기 버튼 클릭 시
+		modalBtn.onclick = function() {
+			modal.style.display = "block"; // 모달 보이기
+		}
+
+		//모달 닫기 버튼 선택
+		var closeBtn = document.getElementsByClassName("close")[0];
+
+		//모달 닫기 버튼 클릭 시
+		closeBtn.onclick = function() {
+			modal.style.display = "none"; // 모달 숨기기
+		}
+
+		//모달 외부를 클릭하면 모달 닫기
+		window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = "none"; // 모달 숨기기
+			}
+		}
+	</script>

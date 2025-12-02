@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member_origin">
+
+	<select id="login" resultType="com.example.ground.dto.Member_originDTO">
+		select * from member_origin where
+		userid=#{userid} and pwd1=#{pwd1}
+	</select>
+		<select id="list_member_origin" resultType="com.example.ground.dto.Member_originDTO">
+		select * from member_origin
+	</select>
+	<select id="detail" resultType="com.example.ground.dto.Member_originDTO">
+		select * from member_origin where
+		userid=#{userid}
+	</select>
+	<insert id="insert"> INSERT INTO
+		member_origin(userid,pwd1,pwd2,name,tel,email,birth,gender,addr1,addr2)
+		VALUES (#{userid}, #{pwd1}, #{pwd2}, #{name}, #{tel}, #{email},
+		#{birth},
+		#{gender}, #{addr1}, #{addr2})
+	</insert>
+	<select id="findId" resultType="String">
+		SELECT userid FROM member_origin WHERE name = #{name} AND birth = #{birth} AND
+		email = #{email}
+	</select>
+	<select id="findPwd" resultType="String"> SELECT pwd1
+		FROM member_origin WHERE userid=#{userid} AND name=#{name} AND birth=#{birth} AND
+		email=#{email}
+	</select>
+	<select id="check" resultType="String"> SELECT userid
+		FROM member_origin WHERE userid=#{userid}
+	</select>
+	<update id="buy">
+    	UPDATE member_origin SET buy=buy + #{buy} WHERE userid = #{userid}
+	</update>
+	<select id="edit" resultType="com.example.ground.dto.Member_originDTO">
+		select * from member_origin where userid=#{userid}
+	</select>
+	<update id="update">
+		update member_origin set pwd1 = #{pwd1}, pwd2 = #{pwd2}, addr1 = #{addr1}, addr2 = #{addr2}, email = #{email}, tel = #{tel}, filename = #{filename}
+		where userid = #{userid}
+	</update>
+	
+
+</mapper>

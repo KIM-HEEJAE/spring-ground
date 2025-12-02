@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="teamcollect">
+	<insert id="insert">
+		insert into collect
+		(code,logo,skil,gender,age,time,days,introduce,shot)
+		values(#{code},#{logo},#{skil},#{gender},#{age},#{time},#{days},#{introduce},#{shot})
+	</insert>
+	<select id="count" resultType="int">
+		select count(*) from collect
+	</select>
+	<select id="list"
+      resultType="com.example.ground.dto.teamcollectDTO">
+      select * from (
+      select rownum as rn, A.* from (
+      SELECT
+      b.code,
+      b.skil,
+      b.gender,
+      b.time,
+      b.logo,
+      b.days,
+      b.introduce,
+      b.age,
+      b.shot,
+      m.logo  
+      AS logo_1,
+      m.name,
+      (SELECT COUNT(*) FROM teammember c WHERE c.code = b.code) AS
+      count
+      FROM collect b
+      INNER JOIN team m ON b.code = m.code
+      ) A
+      ) where rn
+      between #{start} and
+      #{end}
+   </select>
+	<select id="detail"
+		resultType="com.example.ground.dto.teamcollectDTO">
+		SELECT 
+    b.code,
+    b.skil,
+    b.gender,
+    b.time,
+    b.logo,
+    b.days,
+    b.introduce,
+    b.age,
+    b.shot,
+    m.logo AS logo_1,
+    m.name,
+    (SELECT COUNT(*) FROM teammember c WHERE c.code = b.code) AS count 
+FROM 
+    collect b
+INNER JOIN 
+    team m ON b.code = m.code 
+WHERE 
+    b.code = #{code}
+	</select>
+	<select id="ing" resultType="int">
+	select count(*) from collect where code=#{code}
+	</select>
+	<delete id="delete">
+	delete from collect where code=#{code}
+	</delete>
+</mapper>
