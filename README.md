@@ -11,7 +11,7 @@
 - **Tool:** Git, GitHub
 
 ## 📊 서비스 구조 (ERD)
-![구조도_이미지_경로](./images/erd_image.jpg)
+![구조도_이미지_경로](./ground/images/erd_image.jpg)
 *회원(Member)을 중심으로 예약(Reservations), 매칭(Social), 팀(Team), 커뮤니티(Board/Magazine)가 유기적으로 연결된 데이터 모델링을 설계했습니다.*
 
 ---
