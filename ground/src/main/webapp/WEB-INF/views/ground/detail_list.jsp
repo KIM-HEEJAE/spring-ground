@@ -293,11 +293,13 @@ button.disabled {
 					"reservation_date": reservation_date,
 				},
 				success: function(response) {
-					console.log("삽입 성공: " + response);
-					
-					
-					
-					 location.reload();
+				    if (response.startsWith("fail")) {
+				        alert("이미 예약된 시간대가 포함되어 있습니다. 다시 선택해 주세요.");
+				        location.reload();
+				        return;
+				    }
+				    console.log("삽입 성공: " + response);
+				    location.reload();
 				},
 				error: function(xhr, status, error) {
 					console.error("오류 발생: " + error);
